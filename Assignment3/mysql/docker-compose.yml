@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Zxcvbnm@2
+    ports:
+    - 3306:3306
+    volumes:
+    - ./mysql-data:/var/lib/mysql
+    - ./db-dump:/docker-entrypoint-initdb.d
+      
+volumes:
+  mysql-data:
