@@ -1,0 +1,382 @@
+{
+	"info": {
+		"_postman_id": "10878f0b-4728-4446-91ba-10338149b997",
+		"name": "WebService-Lab3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAllURLs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response test\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response test\", function () {",
+							"    pm.response.to.not.have.jsonBody(\"[]\");",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAllURLs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Response test\", function () {",
+							"    pm.response.to.have.jsonBody({\"error_msg\": \"missing `id` for deletion\"});",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostNewURL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response test\", function () {",
+							"    pm.response.to.not.have.body(\"Error while parsing the URL\");",
+							"    pm.response.to.not.have.body(\"No `url` in json body\");",
+							"    pm.response.to.not.have.body(\"Error while inserting into DB\");",
+							"    ",
+							"});",
+							"",
+							"pm.environment.unset(\"sid\");",
+							"pm.environment.set(\"sid\", pm.response.json()[\"sid\"])",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\":\"https://www.youtube.com/watch?v=KgpFBdapobkbnlksdbnklfdnbklndsklbnkfdsnbkndfklbnkfdnbkndfkbnkfdkbnkfdnbkfdnbklnfdkbnkdfnbkfdnbknfdkbnfkdbnkdfnbkfndkbdklnbY\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutURL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const schema = {",
+							"    \"type\":\"object\",",
+							"    \"properties\":{",
+							"        \"new_url\":{",
+							"            \"type\":\"string\"",
+							"        }",
+							"    }",
+							"}",
+							"pm.test(\"Response test\", function () {",
+							"    pm.response.to.have.jsonSchema(schema);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\":\"https://www.youtube.com/watch?v=RohaanbY\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/{{sid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"{{sid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingleURL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(301);",
+							"});",
+							"",
+							"const schema = {",
+							"    \"type\":\"object\",",
+							"    \"properties\":{",
+							"        \"url\":{",
+							"            \"type\":\"string\"",
+							"        }",
+							"    }",
+							"}",
+							"",
+							"pm.test(\"Response test\", function () {",
+							"    pm.response.to.have.jsonSchema(schema);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/{{sid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"{{sid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteSingleUrl",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"pm.test(\"Response test\", function () {",
+							"    pm.response.to.not.have.body({\"error_msg\": \"Error could not find collection with that id\"});",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/{{sid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"{{sid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fail - GetSingleURL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const schema = {",
+							"    \"type\":\"object\",",
+							"    \"properties\":{",
+							"        \"error_msg\":{",
+							"            \"type\":\"string\"",
+							"        }",
+							"    }",
+							"}",
+							"pm.test(\"Response test\", function () {",
+							"    pm.response.to.not.have.jsonSchema(schema);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/{{sid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"{{sid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fail - PutURL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"const schema = {",
+							"    \"type\":\"object\",",
+							"    \"properties\":{",
+							"        \"error_msg\":{",
+							"            \"type\":\"string\"",
+							"        }",
+							"    }",
+							"}",
+							"pm.test(\"Response test\", function () {",
+							"    pm.response.to.not.have.jsonSchema(schema);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\":\"https://www.facebook.com/watch?v=RohaanbY\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/{{sid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"{{sid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,82 @@
+version: '3.1'
+
+services:
+  mysql-db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Zxcvbnm@2
+    ports:
+    - 3306:3306
+    volumes:
+    - ./mysql-data:/var/lib/mysql
+    - ./db-dump:/docker-entrypoint-initdb.d
+    networks:
+      my-network:
+        ipv4_address: 172.25.0.2
+
+  mongo-db:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: tinyUrl
+    ports:
+    - 27017:27017
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      my-network:
+        ipv4_address: 172.25.0.3
+
+  nginx:
+    image: rohaanoa/nginx-ws:1
+    ports:
+      - "1002:8080"
+    networks:
+      my-network:
+        ipv4_address: 172.25.0.6
+
+
+
+  flask:
+    image: rohaanoa/tinyurl:1
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: development
+    depends_on:
+      - mysql-db
+      - mongo-db
+    networks:
+      my-network:
+        ipv4_address: 172.25.0.4
+
+
+  golang:
+    image: rohaanoa/goauth:1
+    ports:
+      - "2011:2011"
+    volumes:
+      - .:/go/src/app
+    depends_on:
+      - mysql-db
+      - mongo-db
+    networks:
+        my-network:
+          ipv4_address: 172.25.0.5
+
+
+networks:
+  my-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+
+volumes:
+  mysql-data:
+  mongo-data:
