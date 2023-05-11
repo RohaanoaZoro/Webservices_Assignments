@@ -1,7 +1,7 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: nginxns
+  name: nginx-ws-ns
   labels:
-    name: nginxns
-    team: nginxns
+    name: nginx-ws-ns
+    team: nginx-ws-ns
