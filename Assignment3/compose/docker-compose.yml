@@ -41,6 +41,7 @@ services:
 
   flask:
     image: rohaanoa/tinyurl:1
+    restart: always
     ports:
       - "5000:5000"
     volumes:
