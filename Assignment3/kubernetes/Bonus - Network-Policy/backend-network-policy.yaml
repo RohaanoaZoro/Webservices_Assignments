@@ -6,9 +6,9 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: devops-backend
+      app: python-tiny-url
   ingress:
   - from:
     - namespaceSelector:
         matchLabels:
-          team: nginxns
+          team: nginx-ws-ns

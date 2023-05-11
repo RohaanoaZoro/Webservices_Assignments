@@ -1,9 +1,9 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: frontend
-  name: frontendadminrole
+  namespace: backend
+  name: backend-admin-role
 rules:
-- apiGroups: ["*"]
+- apiGroups: ["", "extensions", "apps"]
   resources: ["deployments", "replicasets", "pods"]
   verbs: ["get", "list", "watch", "create"]

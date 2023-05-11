@@ -1,14 +1,15 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: web-allow-frontend
-  namespace: frontend
+  name: web-allow-auth
+  namespace: authentication
 spec:
   podSelector:
     matchLabels:
-      app: devops-frontend
+      app: goauth
   ingress:
   - from:
     - namespaceSelector:
         matchLabels:
-          team: nginxns
+          team: nginx-ws-ns
+          
