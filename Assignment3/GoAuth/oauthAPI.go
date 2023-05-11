@@ -388,9 +388,11 @@ func AuthenticationAPI(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Println("clientid", clientid)
+
 	clientSecret, _, _, clientSecretExists := mysql_getClientSecret(clientid)
 	if !clientSecretExists {
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusUnauthorized)
 		jsonData.Set("status", "Failed")
 		jsonData.Set("status_code", "400")
 		jsonData.Set("message", "Client verification failed. Client may not exist.")
@@ -406,7 +408,7 @@ func AuthenticationAPI(w http.ResponseWriter, r *http.Request) {
 
 	// sendRes(w, jsonData)
 
-	var redirectURL string = "http://localhost:2011/authorize?clientid=" + clientid + "&clientsecret=" + clientSecret + "&grant_type=user&scope=1"
+	var redirectURL string = "http://goauth-service.authentication:2011/authorize?clientid=" + clientid + "&clientsecret=" + clientSecret + "&grant_type=user&scope=1"
 	http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 }
 

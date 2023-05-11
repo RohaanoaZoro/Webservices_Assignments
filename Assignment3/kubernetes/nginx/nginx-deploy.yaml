@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ws-deploy
+  namespace: nginx-ws-ns
+  labels:
+    app: nginx-ws
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-ws
+  template:
+    metadata:
+      labels:
+        app: nginx-ws
+    spec:
+      containers:
+      - name: nginx-ws
+        image: docker.io/rohaanoa/nginx-ws:2
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: dockerhub-credential
+      

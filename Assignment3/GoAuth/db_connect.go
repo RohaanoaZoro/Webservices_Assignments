@@ -7,7 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var MYSQLHOST = "127.0.0.1"
+var MYSQLHOST = "mysql.default"
 var MYSQLPORT = "3306"
 var MYSQLUSER = "root"
 var MYSQLPASS = "Zxcvbnm@2"

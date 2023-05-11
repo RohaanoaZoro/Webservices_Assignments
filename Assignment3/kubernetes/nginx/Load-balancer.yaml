@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ws-service
+  namespace: nginx-ws-ns
+  labels:
+    name: nginx-ws-service
+spec:
+  type: LoadBalancer
+  ports:
+    - name: nginx-wsport
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: nginx-ws

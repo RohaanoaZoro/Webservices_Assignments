@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-tiny-url-deploy
+  namespace: backend
+  labels:
+    app: python-tiny-url
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-tiny-url
+  template:
+    metadata:
+      labels:
+        app: python-tiny-url
+    spec:
+      containers:
+      - name: python-tiny-url
+        image: docker.io/rohaanoa/tinyurl:2
+        ports:
+        - containerPort: 5000
+      imagePullSecrets:
+      - name: dockerhub-credential
+      

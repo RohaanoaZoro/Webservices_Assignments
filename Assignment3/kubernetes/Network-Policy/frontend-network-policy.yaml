@@ -1,0 +1,14 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: web-allow-frontend
+  namespace: frontend
+spec:
+  podSelector:
+    matchLabels:
+      app: devops-frontend
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          team: nginxns

@@ -23,5 +23,7 @@ func GetUserDetails(Email string) (UserDetails, error) {
 		return userDetails, err
 	}
 
+	log.Println("Email", Email)
+
 	return userDetails, nil
 }

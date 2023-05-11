@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goauth-deploy
+  namespace: authentication
+  labels:
+    app: goauth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goauth
+  template:
+    metadata:
+      labels:
+        app: goauth
+    spec:
+      containers:
+      - name: goauth
+        image: docker.io/rohaanoa/goauth:3
+        ports:
+        - containerPort: 2011
+      imagePullSecrets:
+      - name: dockerhub-credential
+      
