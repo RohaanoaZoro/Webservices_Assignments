@@ -1,4 +1,6 @@
-# How to run docker compose
+# How to run
+
+### How to run docker compose
 
 1. cd compose (move into the compose folder)
 2. sudo docker compose up
