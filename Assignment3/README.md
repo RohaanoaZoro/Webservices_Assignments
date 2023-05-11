@@ -1,7 +1,7 @@
 # How to run docker compose
 
-cd compose (move into the compose folder)
-sudo docker compose up
+1. cd compose (move into the compose folder)
+2. sudo docker compose up
 
 ### How run in kubernetes
 
